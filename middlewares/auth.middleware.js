@@ -12,9 +12,6 @@ export async function authMiddleware(req, res, next) {
     }
 
     const verifyToken = jwt.verify(token, process.env.JWT_SECRET);
-    if (!verifyToken) {
-      return res.status(400).json({ message: "Invalid token provided" });
-    }
 
     const validUser = await User.findById(verifyToken.userId);
     if (!validUser) {

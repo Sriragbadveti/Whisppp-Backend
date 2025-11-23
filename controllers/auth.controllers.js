@@ -8,7 +8,7 @@ import cloudinary from "../lib/cloudinary.js";
 export async function signupController(req, res) {
   const { username, email, password, profilePic } = req.body;
 
-  if (!username || !email || !password || !profilePic) {
+  if (!username || !email || !password) {
     return res.status(400).json({ message: "Missing input fields" });
   }
 
@@ -35,7 +35,7 @@ export async function signupController(req, res) {
     username,
     password: hashedPassword,
     email,
-    profilePic,
+    profilePic: profilePic || "",
   });
 
   try {
@@ -97,7 +97,7 @@ export async function updateProfileController(req, res) {
     const { profilePic } = req.body;
 
     if (!profilePic) {
-      res.status(400).json({ message: "Profile pic is missing" });
+      return res.status(400).json({ message: "Profile pic is missing" });
     }
 
     const user = req.user._id;
@@ -110,8 +110,9 @@ export async function updateProfileController(req, res) {
       { new: true }
     );
 
-    res.status(200).json(updatedUser);
+    return res.status(200).json(updatedUser);
   } catch (error) {
-    res.status(400).json({ message: "Error in the upload profile controller" });
+    console.error("Error in updateProfileController:", error);
+    return res.status(500).json({ message: "Error in the upload profile controller" });
   }
 }
