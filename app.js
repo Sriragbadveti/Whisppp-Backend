@@ -24,8 +24,10 @@ app.use("/api" , messageRoutes);
 
 
 
-server.listen(3000 , ()=>{
-    console.log("App is running on 3000")
+const PORT = process.env.PORT || 3000;
+
+server.listen(PORT , ()=>{
+    console.log(`App is running on ${PORT}`)
 })
 
 mongoose.connect(process.env.MONGODB_URI)
