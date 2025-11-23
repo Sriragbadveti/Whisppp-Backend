@@ -88,7 +88,16 @@ export async function loginController(req, res) {
 }
 
 export async function logoutController(req, res) {
-  res.cookie("jwt", "", { maxAge: 0 });
+  const isProduction = process.env.NODE_ENV === 'production';
+  
+  res.cookie("jwt", "", {
+    maxAge: 0,
+    httpOnly: true,
+    secure: isProduction,
+    sameSite: isProduction ? 'none' : 'lax',
+    path: '/'
+  });
+  
   res.status(200).json({ message: "User logged out successfully" });
 }
 
