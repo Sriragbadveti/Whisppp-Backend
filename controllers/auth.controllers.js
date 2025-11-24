@@ -60,7 +60,6 @@ export async function signupController(req, res) {
       .status(200)
       .json({ message: "User has been successfully signed up" });
   } catch (err) {
-    console.error("Signup error:", err);
     return res.status(500).json({ message: "Internal server error" });
   }
 }
