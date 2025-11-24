@@ -3,7 +3,7 @@ import bcrypt from "bcrypt";
 import { generateToken } from "../lib/utils.js";
 import { sendWelcomeEmails } from "../emails/email.handlers.js";
 import cloudinary from "../lib/cloudinary.js";
-import { getStreamToken } from "../lib/getStreamToken.js";
+// Removed incorrect import - getStreamToken is in generateStreamToken.js and is only used in stream routes
 
 
 export async function signupController(req, res) {
