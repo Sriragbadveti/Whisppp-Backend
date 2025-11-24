@@ -36,40 +36,30 @@ export async function authMiddleware(req, res, next) {
 
 export async function socketAuthMiddleware(socket, next) {
   try {
-    console.log("Socket connection attempt - checking authentication...");
-    
     const cookies = socket.handshake.headers.cookie;
-    console.log("Cookies received:", cookies);
-    
     const token = cookies?.split("; ").find((row)=>row.startsWith("jwt="))?.split("=")[1];
 
     if(!token){
-      console.log("Socket connection rejected: No token provided");
       return next(new Error("Unauthorized no token provided"));
     }
 
-    console.log("Token found, verifying...");
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     
     if(!decoded){
-      console.log("Socket connection rejected: Invalid token");
       return next(new Error("Unauthorized invalid token"));
     }
   
     const user = await User.findById(decoded.userId).select("-password");
     if(!user){
-      console.log("Socket connection rejected: User not found");
       return next(new Error("User not found"));
     }
 
     socket.user = user;
     socket.userId = user._id.toString();
 
-    console.log(`✅ Socket authenticated successfully for user: ${user.username}`);
     next();
 
   } catch (error) {
-    console.log("❌ Socket authentication error:", error.message);
     return next(new Error("Authentication failed"));
   }
 

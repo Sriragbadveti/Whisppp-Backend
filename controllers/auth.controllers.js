@@ -47,7 +47,6 @@ export async function signupController(req, res) {
     try {
       await sendWelcomeEmails(email, username, process.env.CLIENT_URL);
     } catch (emailErr) {
-      console.error("Failed to send welcome email:", emailErr);
       // do not fail signup because email failed
     }
 
@@ -128,7 +127,6 @@ export async function updateProfileController(req, res) {
 
     return res.status(200).json(updatedUser);
   } catch (error) {
-    console.error("Error in updateProfileController:", error);
     return res.status(500).json({ message: "Error in the upload profile controller" });
   }
 }

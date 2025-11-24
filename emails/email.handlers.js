@@ -12,10 +12,7 @@ const { data, error } = await resendClient.emails.send({
 
 
   if(error){
-    console.error("Error sending emails");
     throw new Error("failed to send an email");
-  }
-
-  console.log("Email sent successfully" , data); 
+  } 
 
 }

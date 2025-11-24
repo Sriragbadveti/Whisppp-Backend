@@ -22,9 +22,6 @@ const allowedOrigins = [
   process.env.CLIENT_URL
 ].filter(Boolean); // Remove any undefined values
 
-console.log('Allowed CORS origins:', allowedOrigins);
-console.log('CLIENT_URL from env:', process.env.CLIENT_URL);
-
 app.use(cors({
   origin: function (origin, callback) {
     // Allow requests with no origin (like mobile apps, Postman, or curl requests)
@@ -35,7 +32,6 @@ app.use(cors({
     if (allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      console.log('CORS blocked origin:', origin);
       callback(new Error('Not allowed by CORS'));
     }
   },
@@ -45,12 +41,6 @@ app.use(cors({
   exposedHeaders: ['Content-Type', 'Authorization'],
   optionsSuccessStatus: 200 // Some legacy browsers (IE11, various SmartTVs) choke on 204
 }));
-
-// Logging middleware for debugging CORS issues
-app.use((req, res, next) => {
-  console.log(`${req.method} ${req.path} - Origin: ${req.headers.origin || 'No origin'}`);
-  next();
-});
 
 app.use(cookieParser());
 
