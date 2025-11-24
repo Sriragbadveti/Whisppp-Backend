@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import { generateToken } from "../lib/utils.js";
 import { sendWelcomeEmails } from "../emails/email.handlers.js";
 import cloudinary from "../lib/cloudinary.js";
+import { getStreamToken } from "../lib/getStreamToken.js";
 
 
 export async function signupController(req, res) {
@@ -49,6 +50,12 @@ export async function signupController(req, res) {
       console.error("Failed to send welcome email:", emailErr);
       // do not fail signup because email failed
     }
+
+    
+
+    
+
+
 
     return res
       .status(200)

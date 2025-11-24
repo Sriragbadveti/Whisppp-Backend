@@ -5,6 +5,7 @@ import express from "express";
 import mongoose from "mongoose";
 import authRoutes from "./routes/auth.routes.js";
 import messageRoutes from "./routes/message.routes.js";
+import streamRoutes from "./routes/stream.routes.js";
 import cors from "cors";
 import { app, server } from "./lib/socket.js";
 
@@ -57,6 +58,7 @@ app.use(cookieParser());
 
 app.use("/auth" , authRoutes);
 app.use("/api" , messageRoutes);
+app.use("/chat" , streamRoutes );
 
 
 
